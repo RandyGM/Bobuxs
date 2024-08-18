@@ -30,4 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('ticketCount', ticketCount);
         saveTicketsToDatabase(ticketCount);
     }
+
+    // Seleccionar todos los botones de ticket
+    const ticketButtons = document.querySelectorAll('a[id^="ticket-button-"]');
+    
+    ticketButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const ticketAmount = parseInt(button.id.split('-')[2]); // Obtén la cantidad de tickets del id del botón
+            purchaseTickets(ticketAmount);
+        });
+    });
 });
