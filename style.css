@@ -350,42 +350,6 @@ button.btn-submit:disabled {
     cursor: not-allowed;
 }
 
-#purchase-confirmation {
-    background-color: var(--color1);
-    border: 1px solid var(--color5);
-    border-radius: 10px;
-    color: var(--color4);
-    text-align: center;
-    max-width: 80%;
-    margin: 32px auto;
-    padding: 16px;
-    box-sizing: border-box;
-}
-
-#purchase-confirmation h2 {
-    color: var(--color6);
-    margin-bottom: 16px;
-}
-
-#purchase-confirmation p {
-    margin-bottom: 16px;
-}
-
-#close-confirmation {
-    background-color: var(--color6);
-    border-radius: 25px;
-    color: var(--color1);
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-#close-confirmation:hover {
-    background-color: var(--color3);
-    color: var(--color6);
-}
-
-
 /* Media Query para dispositivos pequeños */
 @media only screen and (max-width: 540px) {
     .card-bobux {
