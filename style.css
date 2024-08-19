@@ -371,4 +371,14 @@ button.btn-submit:disabled {
         width: 90%;
         max-width: 100%;
     }
+
+    .card-container {
+        flex-direction: column; /* Cambia la disposición de las tarjetas a vertical */
+    }
+
+    .card-ticket {
+        width: 80%; /* Ajusta el ancho al 80% para pantallas pequeñas */
+        margin: 16px auto; /* Centrar las tarjetas verticales */
+        max-width: 100%; /* Asegura que no excedan el ancho de la pantalla */
+    }
 }
