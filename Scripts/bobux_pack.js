@@ -1,4 +1,3 @@
-//bobux_pack.js
 const packages = [
     {
         imgSrc: "../Img/Icon.png",
@@ -45,7 +44,7 @@ function generatePackages() {
             <h2>${pkg.title}</h2>
             <p><span> - ${pkg.robux} Get Bobux -</span></p>
             <p>Price ${pkg.price} Tickets</p>
-            <a href="#" class="btn" data-price="${pkg.price}">Buy Bobux</a>
+            <a href="#" class="btn" data-price="${pkg.price}" data-robux="${pkg.robux}">Buy Bobux</a>
         `;
 
         container.appendChild(packageDiv);
@@ -57,10 +56,11 @@ function generatePackages() {
         button.addEventListener('click', function(event) {
             event.preventDefault();
             const price = parseInt(this.getAttribute('data-price'));
-            const confirmPurchase = confirm(`Are you sure you want to spend ${price} tickets to buy this package?`);
+            const robux = this.getAttribute('data-robux');
+            const confirmPurchase = confirm(`Are you sure you want to spend ${price} tickets to buy ${robux} Bobux?`);
 
             if (confirmPurchase) {
-                handlePurchase(price);
+                handlePurchase(price, robux);
             } else {
                 alert('Purchase canceled.');
             }
@@ -69,41 +69,25 @@ function generatePackages() {
 }
 
 // Función para manejar la compra de paquetes
-function handlePurchase(price) {
-    const ticketCountElement = document.getElementById('ticket-count');
-    let ticketCount = parseInt(localStorage.getItem('ticketCount')) || 0;
+function handlePurchase(price, robux) {
+    // Actualiza los tickets del usuario aquí
+    // ...
 
-    if (ticketCount >= price) {
-        // Reducir el conteo de tickets
-        ticketCount -= price;
-        ticketCountElement.textContent = ticketCount;
-        localStorage.setItem('ticketCount', ticketCount);
+    // Mostrar el mensaje de confirmación
+    const confirmationDiv = document.getElementById('purchase-confirmation');
+    const bobuxAmountSpan = document.getElementById('bobux-amount');
+    const ticketCostSpan = document.getElementById('ticket-cost');
 
-        // Guardar los tickets actualizados en la base de datos
-        saveTicketsToDatabase(ticketCount);
+    bobuxAmountSpan.textContent = robux;
+    ticketCostSpan.textContent = price;
 
-        alert('Purchase successful!');
-    } else {
-        alert('Not enough tickets to complete the purchase.');
-    }
+    confirmationDiv.style.display = 'block';
+
+    const closeButton = document.getElementById('close-confirmation');
+    closeButton.addEventListener('click', function() {
+        confirmationDiv.style.display = 'none';
+    });
 }
 
-// Función para guardar los tickets en la base de datos
-async function saveTicketsToDatabase(ticketCount) {
-    const username = localStorage.getItem('username');
-    try {
-        await fetch('http://localhost:3000/api/updateTickets', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name: username, tickets: ticketCount })
-        });
-    } catch (error) {
-        console.error('Error al guardar los tickets en la base de datos:', error);
-    }
-}
-
-// Llamar a la función para generar los paquetes cuando se cargue la página
-document.addEventListener('DOMContentLoaded', generatePackages);
-
+// Llamada a la función para generar los paquetes al cargar la página
+window.onload = generatePackages;
