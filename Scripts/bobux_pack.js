@@ -40,24 +40,27 @@ function showCustomConfirm(message, onConfirm) {
     confirmOverlay.style.left = '0';
     confirmOverlay.style.width = '100%';
     confirmOverlay.style.height = '100%';
-    confirmOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    confirmOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
     confirmOverlay.style.display = 'flex';
     confirmOverlay.style.alignItems = 'center';
     confirmOverlay.style.justifyContent = 'center';
     confirmOverlay.style.zIndex = '1000';
 
     const confirmBox = document.createElement('div');
-    confirmBox.style.backgroundColor = 'white';
+    confirmBox.style.backgroundColor = 'var(--color2)';
     confirmBox.style.padding = '20px';
-    confirmBox.style.borderRadius = '5px';
+    confirmBox.style.borderRadius = '10px';
     confirmBox.style.textAlign = 'center';
+    confirmBox.style.border = '2px solid var(--color5)';
 
     const messageElem = document.createElement('p');
     messageElem.textContent = message;
+    messageElem.style.color = 'var(--color4)';
     confirmBox.appendChild(messageElem);
 
     const yesButton = document.createElement('button');
     yesButton.textContent = 'Yes';
+    yesButton.className = 'btn';
     yesButton.style.margin = '10px';
     yesButton.addEventListener('click', () => {
         document.body.removeChild(confirmOverlay);
@@ -67,6 +70,7 @@ function showCustomConfirm(message, onConfirm) {
 
     const noButton = document.createElement('button');
     noButton.textContent = 'No';
+    noButton.className = 'btn';
     noButton.style.margin = '10px';
     noButton.addEventListener('click', () => {
         document.body.removeChild(confirmOverlay);
@@ -84,7 +88,7 @@ function generatePackages() {
 
     packages.forEach(pkg => {
         const packageDiv = document.createElement('div');
-        packageDiv.className = 'package';
+        packageDiv.className = 'package card-bobux';
 
         packageDiv.innerHTML = `
             <img src="${pkg.imgSrc}" alt="${pkg.title}" class="img-tier">
@@ -154,3 +158,4 @@ async function saveTicketsToDatabase(ticketCount) {
 
 // Llamar a la función para generar los paquetes cuando se cargue la página
 document.addEventListener('DOMContentLoaded', generatePackages);
+
