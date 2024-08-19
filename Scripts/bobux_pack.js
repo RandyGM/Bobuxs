@@ -32,6 +32,52 @@ const packages = [
     }
 ];
 
+// Función para mostrar un cuadro de diálogo personalizado
+function showCustomConfirm(message, onConfirm) {
+    const confirmOverlay = document.createElement('div');
+    confirmOverlay.style.position = 'fixed';
+    confirmOverlay.style.top = '0';
+    confirmOverlay.style.left = '0';
+    confirmOverlay.style.width = '100%';
+    confirmOverlay.style.height = '100%';
+    confirmOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    confirmOverlay.style.display = 'flex';
+    confirmOverlay.style.alignItems = 'center';
+    confirmOverlay.style.justifyContent = 'center';
+    confirmOverlay.style.zIndex = '1000';
+
+    const confirmBox = document.createElement('div');
+    confirmBox.style.backgroundColor = 'white';
+    confirmBox.style.padding = '20px';
+    confirmBox.style.borderRadius = '5px';
+    confirmBox.style.textAlign = 'center';
+
+    const messageElem = document.createElement('p');
+    messageElem.textContent = message;
+    confirmBox.appendChild(messageElem);
+
+    const yesButton = document.createElement('button');
+    yesButton.textContent = 'Yes';
+    yesButton.style.margin = '10px';
+    yesButton.addEventListener('click', () => {
+        document.body.removeChild(confirmOverlay);
+        onConfirm(true);
+    });
+    confirmBox.appendChild(yesButton);
+
+    const noButton = document.createElement('button');
+    noButton.textContent = 'No';
+    noButton.style.margin = '10px';
+    noButton.addEventListener('click', () => {
+        document.body.removeChild(confirmOverlay);
+        onConfirm(false);
+    });
+    confirmBox.appendChild(noButton);
+
+    confirmOverlay.appendChild(confirmBox);
+    document.body.appendChild(confirmOverlay);
+}
+
 // Función para generar los paquetes
 function generatePackages() {
     const container = document.getElementById('packages-container');
@@ -57,13 +103,15 @@ function generatePackages() {
         button.addEventListener('click', function(event) {
             event.preventDefault();
             const price = parseInt(this.getAttribute('data-price'));
-            const confirmPurchase = confirm(`Are you sure you want to spend ${price} tickets to buy this package?`);
 
-            if (confirmPurchase) {
-                handlePurchase(price);
-            } else {
-                alert('Purchase canceled.');
-            }
+            // Reemplazamos confirm() con showCustomConfirm()
+            showCustomConfirm(`Are you sure you want to spend ${price} tickets to buy this package?`, function(confirmPurchase) {
+                if (confirmPurchase) {
+                    handlePurchase(price);
+                } else {
+                    alert('Purchase canceled.');
+                }
+            });
         });
     });
 }
@@ -106,4 +154,3 @@ async function saveTicketsToDatabase(ticketCount) {
 
 // Llamar a la función para generar los paquetes cuando se cargue la página
 document.addEventListener('DOMContentLoaded', generatePackages);
-
