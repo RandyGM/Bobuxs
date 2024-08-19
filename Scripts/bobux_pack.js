@@ -32,6 +32,56 @@ const packages = [
     }
 ];
 
+// Función para mostrar un cuadro de diálogo personalizado
+function showCustomConfirm(message, onConfirm) {
+    const confirmOverlay = document.createElement('div');
+    confirmOverlay.style.position = 'fixed';
+    confirmOverlay.style.top = '0';
+    confirmOverlay.style.left = '0';
+    confirmOverlay.style.width = '100%';
+    confirmOverlay.style.height = '100%';
+    confirmOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
+    confirmOverlay.style.display = 'flex';
+    confirmOverlay.style.alignItems = 'center';
+    confirmOverlay.style.justifyContent = 'center';
+    confirmOverlay.style.zIndex = '1000';
+
+    const confirmBox = document.createElement('div');
+    confirmBox.style.backgroundColor = 'var(--color2)';
+    confirmBox.style.padding = '20px';
+    confirmBox.style.borderRadius = '10px';
+    confirmBox.style.textAlign = 'center';
+    confirmBox.style.border = '2px solid var(--color5)';
+
+    const messageElem = document.createElement('p');
+    messageElem.textContent = message;
+    messageElem.style.color = 'var(--color4)';
+    confirmBox.appendChild(messageElem);
+
+    const yesButton = document.createElement('button');
+    yesButton.textContent = 'Yes';
+    yesButton.className = 'btn';
+    yesButton.style.margin = '10px';
+    yesButton.addEventListener('click', () => {
+        document.body.removeChild(confirmOverlay);
+        onConfirm(true);
+    });
+    confirmBox.appendChild(yesButton);
+
+    const noButton = document.createElement('button');
+    noButton.textContent = 'No';
+    noButton.className = 'btn';
+    noButton.style.margin = '10px';
+    noButton.addEventListener('click', () => {
+        document.body.removeChild(confirmOverlay);
+        onConfirm(false);
+    });
+    confirmBox.appendChild(noButton);
+
+    confirmOverlay.appendChild(confirmBox);
+    document.body.appendChild(confirmOverlay);
+}
+
 // Función para generar los paquetes
 function generatePackages() {
     const container = document.getElementById('packages-container');
