@@ -88,7 +88,7 @@ function generatePackages() {
 
     packages.forEach(pkg => {
         const packageDiv = document.createElement('div');
-        packageDiv.className = 'package card-bobux';
+        packageDiv.className = 'package';
 
         packageDiv.innerHTML = `
             <img src="${pkg.imgSrc}" alt="${pkg.title}" class="img-tier">
